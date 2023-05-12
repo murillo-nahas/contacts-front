@@ -1,3 +1,16 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    backgroundColor: "#F6F5FC",
+    colors: {
+        background: "#F6F5FC",
+        primary: {
+            lighter: "#E0E3FF",
+            light: "#6674F4",
+            main: "#5061fc",
+            dark: "#3346F0",
+        },
+        gray: {
+            900: "#222222",
+            200: "#bcbcbc",
+        },
+    },
 };
