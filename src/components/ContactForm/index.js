@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { useState, useRef } from "react";
+
 import FormGroup from "../FormGroup";
 import { Form, ButtonContainer } from "./styles";
 
@@ -10,14 +12,22 @@ import Select from "../Select";
 import Button from "../Button";
 
 export default function ContactForm({ buttonLabel }) {
+    const [name, setName] = useState("");
+
+    const emailInput = useRef(null);
+
     return (
         <Form>
             <FormGroup>
-                <Input placeholder="Nome" />
+                <Input
+                    value={name}
+                    placeholder="Nome"
+                    onChange={(event) => setName(event.target.value)}
+                />
             </FormGroup>
 
             <FormGroup>
-                <Input placeholder="E-mail" />
+                <Input placeholder="E-mail" ref={emailInput} />
             </FormGroup>
 
             <FormGroup>
