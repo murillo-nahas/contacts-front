@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import Modal from "../../components/Modal";
+
 import {
     Container,
     InputSearchContainer,
