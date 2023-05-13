@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import {
     Container,
     InputSearchContainer,
@@ -21,7 +23,7 @@ export default function Home() {
 
             <Header>
                 <strong>3 contatos</strong>
-                <a href="/">Novo contato</a>
+                <Link to="/new">Novo contato</Link>
             </Header>
 
             <ListContainer>
@@ -43,49 +45,9 @@ export default function Home() {
                     </div>
 
                     <div className="actions">
-                        <a href="/">
+                        <Link to="/edit/123">
                             <img src={edit} alt="Edit" />
-                        </a>
-                        <button type="button">
-                            <img src={trash} alt="Delete" />
-                        </button>
-                    </div>
-                </Card>
-
-                <Card>
-                    <div className="info">
-                        <div className="contact-name">
-                            <strong>Murillo Nahás</strong>
-                            <small>instagram</small>
-                        </div>
-                        <span>murillonahas2003@gmail.com</span>
-                        <span>(14) 99907-7793</span>
-                    </div>
-
-                    <div className="actions">
-                        <a href="/">
-                            <img src={edit} alt="Edit" />
-                        </a>
-                        <button type="button">
-                            <img src={trash} alt="Delete" />
-                        </button>
-                    </div>
-                </Card>
-
-                <Card>
-                    <div className="info">
-                        <div className="contact-name">
-                            <strong>Murillo Nahás</strong>
-                            <small>instagram</small>
-                        </div>
-                        <span>murillonahas2003@gmail.com</span>
-                        <span>(14) 99907-7793</span>
-                    </div>
-
-                    <div className="actions">
-                        <a href="/">
-                            <img src={edit} alt="Edit" />
-                        </a>
+                        </Link>
                         <button type="button">
                             <img src={trash} alt="Delete" />
                         </button>
