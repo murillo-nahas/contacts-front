@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
-
 import Modal from "../../components/Modal";
 
 import {
@@ -29,93 +27,26 @@ import magnifierQuestion from "../../assets/images/magnifier-question.svg";
 
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
-import ContactsService from "../../services/ContactsService";
-
-import toast from "../../utils/toast";
+import useHome from "./useHome";
 
 export default function Home() {
-    const [contacts, setContacts] = useState([]);
-    const [orderBy, setOrderBy] = useState("asc");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-    const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
-    const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-
-    const filteredContacts = useMemo(() => {
-        return contacts.filter((contact) =>
-            contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    }, [contacts, searchTerm]);
-
-    const loadContacts = useCallback(async () => {
-        try {
-            setIsLoading(true);
-
-            const contactsList = await ContactsService.listContacts(orderBy);
-
-            setHasError(false);
-            setContacts(contactsList);
-        } catch {
-            setHasError(true);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [orderBy]);
-
-    useEffect(() => {
-        loadContacts();
-    }, [loadContacts]);
-
-    function handleToggleOrderBy() {
-        setOrderBy((prevState) => (prevState === "asc" ? "desc" : "asc"));
-    }
-
-    function handleChangeSearchTerm(event) {
-        setSearchTerm(event.target.value);
-    }
-
-    function handleTryAgain() {
-        loadContacts();
-    }
-
-    function handleDeleteContact(contact) {
-        setContactBeingDeleted(contact);
-        setIsDeleteModalVisible(true);
-    }
-
-    function handleCloseDeleteModal() {
-        setIsDeleteModalVisible(false);
-        setContactBeingDeleted(null);
-    }
-
-    async function handleConfirmDeleteContact() {
-        try {
-            setIsLoadingDelete(true);
-            await ContactsService.deleteContact(contactBeingDeleted.id);
-
-            setContacts((prevState) =>
-                prevState.filter(
-                    (contact) => contact.id !== contactBeingDeleted.id
-                )
-            );
-
-            toast({
-                type: "success",
-                text: "Contato deletado com sucesso!",
-            });
-
-            handleCloseDeleteModal();
-        } catch {
-            toast({
-                type: "danger",
-                text: "Ocorreu um erro ao deletar o contato!",
-            });
-        } finally {
-            setIsLoadingDelete(false);
-        }
-    }
+    const {
+        isLoading,
+        isLoadingDelete,
+        isDeleteModalVisible,
+        contactBeingDeleted,
+        handleCloseDeleteModal,
+        handleConfirmDeleteContact,
+        contacts,
+        searchTerm,
+        handleChangeSearchTerm,
+        hasError,
+        handleTryAgain,
+        filteredContacts,
+        orderBy,
+        handleToggleOrderBy,
+        handleDeleteContact,
+    } = useHome();
 
     return (
         <Container>
@@ -216,8 +147,8 @@ export default function Home() {
                             <div className="info">
                                 <div className="contact-name">
                                     <strong>{contact.name}</strong>
-                                    {contact.category_name && (
-                                        <small>{contact.category_name}</small>
+                                    {contact.category.name && (
+                                        <small>{contact.category.name}</small>
                                     )}
                                 </div>
                                 <span>{contact.email}</span>
